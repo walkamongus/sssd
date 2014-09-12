@@ -6,11 +6,14 @@
 class sssd::params {
   case $::osfamily {
     'RedHat': {
-      $package_name   = 'sssd'
-      $service_name   = 'sssd'
-      $config_file    = '/etc/sssd/sssd.conf'
-      $config         = {}
-      $default_config = {
+      $sssd_package_name   = 'sssd'
+      $sudo_package_name   = 'libsss_sudo'
+      $autofs_package_name = 'libsss_autofs'
+      $ipa_package_name    = 'libsss_idmap'
+      $service_name        = 'sssd'
+      $config_file         = '/etc/sssd/sssd.conf'
+      $config              = {}
+      $default_config      = {
         'sssd'                  => {
           'config_file_version' => '2',
           'services'            => 'nss,pam',

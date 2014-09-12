@@ -17,8 +17,10 @@ describe 'sssd' do
           it { should contain_class('sssd::service').that_subscribes_to('sssd::config') }
         end
 	describe 'sssd::install class' do
-          it { should contain_service('sssd') }
           it { should contain_package('sssd').with_ensure('present') }
+          it { should contain_package('libsss_sudo').with_ensure('present') }
+          it { should contain_package('libsss_autofs').with_ensure('present') }
+          it { should contain_package('libsss_idmap').with_ensure('present') }
 	end
 	describe 'sssd::config class' do
 	  it { should contain_file('File[sssd_config_file]').with({
@@ -30,6 +32,7 @@ describe 'sssd' do
 	  it { should contain_file('File[sssd_config_file]').with_content(/services = nss,pam/) }
 	end
 	describe 'sssd::service class' do
+          it { should contain_service('sssd') }
 	end
       end
       describe "sssd class with some custom parameters on #{osfamily}" do

@@ -9,9 +9,12 @@
 #
 class sssd (
 
-  $package_name = $sssd::params::package_name,
-  $service_name = $sssd::params::service_name,
-  $config       = $sssd::params::config,
+  $sssd_package_name   = $sssd::params::sssd_package_name,
+  $sudo_package_name   = $sssd::params::sudo_package_name,
+  $autofs_package_name = $sssd::params::autofs_package_name,
+  $ipa_package_name    = $sssd::params::ipa_package_name,
+  $service_name        = $sssd::params::service_name,
+  $config              = $sssd::params::config,
 
 ) inherits sssd::params {
 

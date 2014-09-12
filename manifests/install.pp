@@ -2,7 +2,20 @@
 #
 class sssd::install {
 
-  package { $sssd::package_name:
+  package { $sssd::sssd_package_name:
     ensure => present,
   }
+
+  package { $sssd::sudo_package_name:
+    ensure => present,
+  }
+
+  package { $sssd::autofs_package_name:
+    ensure => present,
+  }
+
+  package { $sssd::ipa_package_name:
+    ensure => present,
+  }
+
 }
