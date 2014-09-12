@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'sssd' do
   context 'supported operating systems' do
-    ['Debian', 'RedHat'].each do |osfamily|
+    ['RedHat'].each do |osfamily|
       describe "sssd class without any parameters on #{osfamily}" do
         let(:params) {{ }}
         let(:facts) {{
