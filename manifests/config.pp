@@ -9,7 +9,9 @@ class sssd::config {
   file {'sssd_config_file':
     path    => $sssd::config_file,
     content => template('sssd/sssd.conf.erb'),
-    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0600',
   }
 
 }

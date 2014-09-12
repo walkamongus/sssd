@@ -22,8 +22,10 @@ describe 'sssd' do
 	end
 	describe 'sssd::config class' do
 	  it { should contain_file('File[sssd_config_file]').with({
-	    :path => '/etc/sssd/sssd.conf',
-	    :mode => '0644'
+	    :path  => '/etc/sssd/sssd.conf',
+	    :owner => 'root',
+	    :group => 'root',
+	    :mode  => '0600'
 	  }) }
 	  it { should contain_file('File[sssd_config_file]').with_content(/ldap_uri = ldap:\/\/your.ad.example.com/) }
 	  it { should contain_file('File[sssd_config_file]').with_content(/ldap_uri = ldap:\/\/ldap.mydomain.org/) }
