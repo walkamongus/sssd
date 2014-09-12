@@ -1,3 +1,7 @@
+# sssd Puppet Module
+
+[![Build Status](https://travis-ci.org/walkamongus/sssd.svg)](https://travis-ci.org/walkamongus/sssd)
+
 ####Table of Contents
 
 1. [Overview](#overview)
