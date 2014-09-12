@@ -5,11 +5,7 @@
 #
 class sssd::params {
   case $::osfamily {
-    'Debian': {
-      $package_name = 'sssd'
-      $service_name = 'sssd'
-    }
-    'RedHat', 'Amazon': {
+    'RedHat': {
       $package_name = 'sssd'
       $service_name = 'sssd'
     }
