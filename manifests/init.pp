@@ -8,8 +8,11 @@
 #   Explanation of what this parameter affects and what it defaults to.
 #
 class sssd (
+
   $package_name = $sssd::params::package_name,
   $service_name = $sssd::params::service_name,
+  $config       = $sssd::params::config,
+
 ) inherits sssd::params {
 
   # validate parameters here
