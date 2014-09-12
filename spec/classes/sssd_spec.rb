@@ -10,14 +10,27 @@ describe 'sssd' do
         }}
 
         it { should compile.with_all_deps }
-
-        it { should contain_class('sssd::params') }
-        it { should contain_class('sssd::install').that_comes_before('sssd::config') }
-        it { should contain_class('sssd::config') }
-        it { should contain_class('sssd::service').that_subscribes_to('sssd::config') }
-
-        it { should contain_service('sssd') }
-        it { should contain_package('sssd').with_ensure('present') }
+        describe 'sssd class' do
+          it { should contain_class('sssd::params') }
+          it { should contain_class('sssd::install').that_comes_before('sssd::config') }
+          it { should contain_class('sssd::config') }
+          it { should contain_class('sssd::service').that_subscribes_to('sssd::config') }
+        end
+	describe 'sssd::install class' do
+          it { should contain_service('sssd') }
+          it { should contain_package('sssd').with_ensure('present') }
+	end
+	describe 'sssd::config class' do
+	  it { should contain_file('File[sssd_config_file]').with({
+	    :path => '/etc/sssd/sssd.conf',
+	    :mode => '0644'
+	  }) }
+	  it { should contain_file('File[sssd_config_file]').with_content(/ldap_uri = ldap:\/\/your.ad.example.com/) }
+	  it { should contain_file('File[sssd_config_file]').with_content(/ldap_uri = ldap:\/\/ldap.mydomain.org/) }
+	  it { should contain_file('File[sssd_config_file]').with_content(/services = nss,pam/) }
+	end
+	describe 'sssd::service class' do
+	end
       end
     end
   end
