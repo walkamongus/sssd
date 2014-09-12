@@ -9,7 +9,7 @@ class sssd::params {
       $package_name   = 'sssd'
       $service_name   = 'sssd'
       $config_file    = '/etc/sssd/sssd.conf'
-      $config         = {},
+      $config         = {}
       $default_config = {
         'sssd'                  => {
           'config_file_version' => '2',
@@ -44,7 +44,7 @@ class sssd::params {
           'krb5_server'                 => 'your.ad.example.com',
           'krb5_realm'                  => 'EXAMPLE.COM',
         },
-      },
+      }
     }
     default: {
       fail("${::operatingsystem} not supported")
