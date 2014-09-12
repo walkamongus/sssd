@@ -4,7 +4,7 @@
 #
 class sssd::config {
 
-  $final_config = merge($sssd::params::default_config, $sssd::config)
+  $final_config = deep_merge($sssd::params::default_config, $sssd::config)
 
   file {'sssd_config_file':
     path    => $sssd::config_file,
