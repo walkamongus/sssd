@@ -39,11 +39,13 @@ it is running.
 ###Beginning with sssd
 
 Install SSSD with default config file:
+
      class {'::sssd': }
 
 ##Usage
 
 Install SSSD with custom configuration:
+
     class {'::sssd:
       config => {
         'sssd' => {
@@ -63,11 +65,12 @@ Install SSSD with custom configuration:
 ##Reference
 
 * Classes
-    * sssd::params
-    * sssd::init
-    * sssd::install
-    * sssd::config
-    * sssd::service
+
+    sssd::params
+    sssd::init
+    sssd::install
+    sssd::config
+    sssd::service
 
 ##Limitations
 
