@@ -32,6 +32,36 @@ describe 'sssd' do
 	describe 'sssd::service class' do
 	end
       end
+      describe "sssd class with some custom parameters on #{osfamily}" do
+        let(:params) {{
+	  :config => {
+	    'domain/AD' => {
+	      'ldap_force_upper_case_realm' => false,
+	    },
+	    'domain/LDAP' => {
+	      'cache_credentials' => false,
+	    },
+	    'sssd' => {
+	      'domains' => ['AD','LDAP'],
+	    },
+	  }
+	}}
+        let(:facts) {{
+          :osfamily => osfamily,
+        }}
+
+        it { should compile.with_all_deps }
+	describe 'sssd::config class' do
+	  it { should contain_file('File[sssd_config_file]').with({
+	    :path => '/etc/sssd/sssd.conf',
+	    :mode => '0644'
+	  }) }
+	  it { should contain_file('File[sssd_config_file]').with_content(/domains = AD,LDAP/) }
+	  it { should contain_file('File[sssd_config_file]').with_content(/cache_credentials = false/) }
+	  it { should contain_file('File[sssd_config_file]').with_content(/ldap_force_upper_case_realm = false/) }
+	  it { should contain_file('File[sssd_config_file]').with_content(/ldap_uri = ldap:\/\/your.ad.example.com/) }
+	end
+      end
     end
   end
 
