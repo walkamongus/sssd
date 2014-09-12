@@ -54,10 +54,6 @@ describe 'sssd' do
 
         it { should compile.with_all_deps }
 	describe 'sssd::config class' do
-	  it { should contain_file('File[sssd_config_file]').with({
-	    :path => '/etc/sssd/sssd.conf',
-	    :mode => '0644'
-	  }) }
 	  it { should contain_file('File[sssd_config_file]').with_content(/domains = AD,LDAP/) }
 	  it { should contain_file('File[sssd_config_file]').with_content(/cache_credentials = false/) }
 	  it { should contain_file('File[sssd_config_file]').with_content(/ldap_force_upper_case_realm = false/) }
