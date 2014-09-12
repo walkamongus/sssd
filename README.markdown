@@ -46,7 +46,7 @@ Install SSSD with default config file:
 
 Install SSSD with custom configuration:
 
-    class {'::sssd:
+    class {'::sssd':
       config => {
         'sssd' => {
           'key'     => 'value',
@@ -64,13 +64,13 @@ Install SSSD with custom configuration:
 
 ##Reference
 
-* Classes
+###Classes
 
-    sssd::params
-    sssd::init
-    sssd::install
-    sssd::config
-    sssd::service
+* sssd::params
+* sssd::init
+* sssd::install
+* sssd::config
+* sssd::service
 
 ##Limitations
 
