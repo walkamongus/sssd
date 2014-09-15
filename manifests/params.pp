@@ -26,6 +26,10 @@ class sssd::params {
           'cache_credentials' => true,
         },
       }
+      $mkhomedir             = 'disabled'
+      $enable_mkhomedir_cmd  = '/usr/sbin/authconfig --enablemkhomedir --update'
+      $disable_mkhomedir_cmd = '/usr/sbin/authconfig --disablemkhomedir --update'
+      $pam_mkhomedir_check   =  '/bin/grep -E \'^USEMKHOMEDIR=yes$\' /etc/sysconfig/authconfig'
     }
     default: {
       fail("${::operatingsystem} not supported")

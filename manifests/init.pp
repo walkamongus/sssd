@@ -9,12 +9,16 @@
 #
 class sssd (
 
-  $sssd_package_name   = $sssd::params::sssd_package_name,
-  $sudo_package_name   = $sssd::params::sudo_package_name,
-  $autofs_package_name = $sssd::params::autofs_package_name,
-  $ipa_package_name    = $sssd::params::ipa_package_name,
-  $service_name        = $sssd::params::service_name,
-  $config              = $sssd::params::config,
+  $sssd_package_name     = $sssd::params::sssd_package_name,
+  $sudo_package_name     = $sssd::params::sudo_package_name,
+  $autofs_package_name   = $sssd::params::autofs_package_name,
+  $ipa_package_name      = $sssd::params::ipa_package_name,
+  $service_name          = $sssd::params::service_name,
+  $config                = $sssd::params::config,
+  $enable_mkhomedir      = $sssd::params::enable_mkhomedir,
+  $enable_mkhomedir_cmd  = $sssd::params::enable_mkhomedir_cmd,
+  $disable_mkhomedir_cmd = $sssd::params::disable_mkhomedir_cmd,
+  $pam_mkhomedir_check   = $sssd::params::pam_mkhomedir_check,
 
 ) inherits sssd::params {
 
