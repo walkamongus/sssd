@@ -23,13 +23,17 @@ describe 'sssd' do
           it { should contain_package('libsss_idmap').with_ensure('present') }
 	end
 	describe 'sssd::config class' do
-	  it { should contain_file('File[sssd_config_file]').with({
+	  it { should contain_file('sssd_config_file').with({
 	    :path  => '/etc/sssd/sssd.conf',
 	    :owner => 'root',
 	    :group => 'root',
 	    :mode  => '0600'
 	  }) }
-	  it { should contain_file('File[sssd_config_file]').with_content(/services = nss,pam/) }
+	  it { should contain_file('sssd_config_file').with_content(/services = nss,pam/) }
+	  it { should contain_exec('disable mkhomedir').with({
+	    :command => '/usr/sbin/authconfig --disablemkhomedir --update',
+	    :onlyif  => '/bin/grep -E \'^USEMKHOMEDIR=yes$\' /etc/sysconfig/authconfig'
+	  }) }
 	end
 	describe 'sssd::service class' do
           it { should contain_service('sssd') }
@@ -47,7 +51,8 @@ describe 'sssd' do
 	    'sssd' => {
 	      'domains' => ['AD','LDAP'],
 	    },
-	  }
+	  },
+	  :mkhomedir => 'enabled'
 	}}
         let(:facts) {{
           :osfamily => osfamily,
@@ -55,9 +60,13 @@ describe 'sssd' do
 
         it { should compile.with_all_deps }
 	describe 'sssd::config class' do
-	  it { should contain_file('File[sssd_config_file]').with_content(/domains = AD,LDAP/) }
-	  it { should contain_file('File[sssd_config_file]').with_content(/cache_credentials = false/) }
-	  it { should contain_file('File[sssd_config_file]').with_content(/ldap_force_upper_case_realm = false/) }
+	  it { should contain_file('sssd_config_file').with_content(/domains = AD,LDAP/) }
+	  it { should contain_file('sssd_config_file').with_content(/cache_credentials = false/) }
+	  it { should contain_file('sssd_config_file').with_content(/ldap_force_upper_case_realm = false/) }
+	  it { should contain_exec('enable mkhomedir').with({
+	    :command => '/usr/sbin/authconfig --enablemkhomedir --update',
+	    :unless  => '/bin/grep -E \'^USEMKHOMEDIR=yes$\' /etc/sysconfig/authconfig'
+	  }) }
 	end
       end
     end
