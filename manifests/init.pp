@@ -15,7 +15,7 @@ class sssd (
   $ipa_package_name      = $sssd::params::ipa_package_name,
   $service_name          = $sssd::params::service_name,
   $config                = $sssd::params::config,
-  $enable_mkhomedir      = $sssd::params::enable_mkhomedir,
+  $mkhomedir             = $sssd::params::mkhomedir,
   $enable_mkhomedir_cmd  = $sssd::params::enable_mkhomedir_cmd,
   $disable_mkhomedir_cmd = $sssd::params::disable_mkhomedir_cmd,
   $pam_mkhomedir_check   = $sssd::params::pam_mkhomedir_check,

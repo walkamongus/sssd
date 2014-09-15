@@ -14,7 +14,7 @@ class sssd::config {
     mode    => '0600',
   }
 
-  case $sssd::enable_mkhomedir {
+  case $sssd::mkhomedir {
     'enabled': {
       exec {'enable mkhomedir':
         command => $sssd::enable_mkhomedir_cmd,
