@@ -79,7 +79,7 @@ For example:
     $config = {
       'sssd' => {
         'key1' => 'value1',
-        'key2 => [ 'value2, 'value3' ],
+        'key2 => [ 'value2', 'value3' ],
       },
       'domain/LDAP' => {
         'key3' => 'value4',
