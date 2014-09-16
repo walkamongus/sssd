@@ -7,12 +7,16 @@
   "summary": "Install and configure the System Security Services Daemon",
   "description": "Install and configure the System Security Services Daemon",
   "project_page": "https://github.com/walkamongus/sssd",
+  "tags": ["sssd",],
+  "operatingsystem_support": [
+    {
+    "operatingsystem":"RedHat",
+    "operatingsystemrelease":[ "6.0" ]
+    }
+   ],
   "dependencies": [
-
+    {
+    	"name": "puppetlabs-stdlib"
+    }
   ],
-  "types": [
-
-  ],
-  "checksums": {
-  }
 }
