@@ -25,6 +25,9 @@ and remote authentication providers.  This module installs the required sssd pac
 builds the sssd.conf configuration file. It will also enable the sssd service and ensure 
 it is running. 
 
+Auto-creation of user home directories on first login via the PAM mkhomedir.so module may 
+be enabled or disabled (defaults to disabled).
+
 ##Setup
 
 ###What sssd affects
@@ -35,10 +38,12 @@ it is running.
     * sssd.conf
 * Services
     * sssd daemon
+* Execs
+    * the authconfig command is run to enable or disable the PAM mkhomedir.so functionality
 
 ###Beginning with sssd
 
-Install SSSD with default config file:
+Install SSSD with a bare default config file:
 
      class {'::sssd': }
 
@@ -64,6 +69,43 @@ Install SSSD with custom configuration:
 
 ##Reference
 
+###Parameters
+
+* `mkhomedir`: Defaults to 'disabled'.  Set to 'enabled' to enable auto-creation of home directories on user login
+* `config`: A hash of configuration options stuctured like the sssd.conf file. Array values will be joined into comma-separated lists. 
+
+For example:
+
+    $config = {
+      'sssd' => {
+        'key1' => 'value1',
+        'key2 => [ 'value2, 'value3 ],
+      },
+      'domain/LDAP' => {
+        'key3' => 'value4',
+      },
+    }
+
+or in hiera:
+
+    sssd::config:
+      'sssd':
+        key1: value1
+        key2:
+          - value2
+          - value3
+      'domain\LDAP':
+        key3: value4
+
+Will be represented in sssd.conf like this:
+
+    [sssd]
+    key1 = value1
+    key2 = value2, value3
+
+    [domain/LDAP]
+    key3 = value4
+
 ###Classes
 
 * sssd::params
@@ -74,4 +116,6 @@ Install SSSD with custom configuration:
 
 ##Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Developed using:
+* Puppet 3.6.2
+* CentOS 6.5
