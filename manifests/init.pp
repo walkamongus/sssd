@@ -22,7 +22,22 @@ class sssd (
 
 ) inherits sssd::params {
 
-  # validate parameters here
+  validate_string(
+    $sssd_package_name,
+    $sudo_package_name,
+    $autofs_package_name,
+    $ipa_package_name,
+    $service_name,
+    $enable_mkhomedir_cmd,
+    $disable_mkhomedir_cmd,
+    $pam_mkhomedir_check
+  )
+  validate_re(
+    $mkhomedir,
+    [ '^disabled$', '^enabled$' ],
+    'The mkhomedir parameter value should be set to "disabled" or "enabled"'
+  )
+  validate_hash($config)
 
   class { 'sssd::install': } ->
   class { 'sssd::config': } ~>
