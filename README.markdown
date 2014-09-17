@@ -28,6 +28,8 @@ it is running.
 Auto-creation of user home directories on first login via the PAM mkhomedir.so module may 
 be enabled or disabled (defaults to disabled).
 
+For SSH and Sudo integration with SSSD, this module works well with [saz/ssh](#https://forge.puppetlabs.com/saz/ssh) and [trlinkin/nsswitch](#https://forge.puppetlabs.com/trlinkin/nsswitch).
+
 ##Setup
 
 ###What sssd affects
