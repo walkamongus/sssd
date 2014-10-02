@@ -78,15 +78,16 @@ Install SSSD with custom configuration:
 
 For example:
 
-    $config = {
-      'sssd' => {
-        'key1' => 'value1',
-        'key2' => [ 'value2', 'value3' ],
-      },
-      'domain/LDAP' => {
-        'key3' => 'value4',
-      },
-    }
+    class {'::sssd':
+      config => {
+        'sssd' => {
+          'key1' => 'value1',
+          'key2' => [ 'value2', 'value3' ],
+        },
+        'domain/LDAP' => {
+          'key3' => 'value4',
+        },
+      }
 
 or in hiera:
 
@@ -96,7 +97,7 @@ or in hiera:
         key2:
           - value2
           - value3
-      'domain\LDAP':
+      'domain/LDAP':
         key3: value4
 
 Will be represented in sssd.conf like this:
