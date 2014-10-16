@@ -10,9 +10,7 @@
 class sssd (
 
   $sssd_package_name     = $sssd::params::sssd_package_name,
-  $sudo_package_name     = $sssd::params::sudo_package_name,
-  $autofs_package_name   = $sssd::params::autofs_package_name,
-  $ipa_package_name      = $sssd::params::ipa_package_name,
+  $sssd_plugin_packages  = $sssd::params::sssd_plugin_packages,
   $service_name          = $sssd::params::service_name,
   $config                = $sssd::params::config,
   $mkhomedir             = $sssd::params::mkhomedir,

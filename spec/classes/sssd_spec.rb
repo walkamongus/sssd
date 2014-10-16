@@ -18,9 +18,24 @@ describe 'sssd' do
         end
 	describe 'sssd::install class' do
           it { should contain_package('sssd').with_ensure('present') }
-          it { should contain_package('libsss_sudo').with_ensure('present') }
-          it { should contain_package('libsss_autofs').with_ensure('present') }
           it { should contain_package('libsss_idmap').with_ensure('present') }
+	  if osfamily == 'RedHat'
+	    context 'on Red Hat 6.5' do
+              let(:facts) {{
+                :osfamily               => osfamily,
+	        :operatingsystemrelease => '6.5',
+              }}
+              it { should contain_package('libsss_sudo').with_ensure('present') }
+              it { should contain_package('libsss_autofs').with_ensure('present') }
+	    end
+	    context 'on Red Hat 6.6' do
+              let(:facts) {{
+                :osfamily               => osfamily,
+	        :operatingsystemrelease => '6.6',
+              }}
+              it { should contain_package('sssd-common').with_ensure('present') }
+	    end
+	  end
 	end
 	describe 'sssd::config class' do
 	  it { should contain_file('sssd_config_file').with({

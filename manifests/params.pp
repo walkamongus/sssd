@@ -6,10 +6,22 @@
 class sssd::params {
   case $::osfamily {
     'RedHat': {
+      case $::operatingsystemrelease {
+        '6.6': {
+          $sssd_plugin_packages = [
+            'sssd-common',
+            'libsss_idmap',
+          ]
+        }
+        default: {
+          $sssd_plugin_packages = [
+            'libsss_sudo',
+            'libsss_autofs',
+            'libsss_idmap',
+          ]
+        }
+      }
       $sssd_package_name   = 'sssd'
-      $sudo_package_name   = 'libsss_sudo'
-      $autofs_package_name = 'libsss_autofs'
-      $ipa_package_name    = 'libsss_idmap'
       $service_name        = 'sssd'
       $config_file         = '/etc/sssd/sssd.conf'
       $config              = {}
