@@ -5,3 +5,5 @@
 - parameter validations
 2014-10-02 Release 0.1.2
 - doc fixes
+2014-10-16 Release 0.2.0
+- add support for Red Hat 6.6 package changes
