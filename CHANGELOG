@@ -7,3 +7,5 @@
 - doc fixes
 2014-10-16 Release 0.2.0
 - add support for Red Hat 6.6 package changes
+2014-10-22 Release 0.2.1
+- BUGFIX (#1) add correct variable validations
