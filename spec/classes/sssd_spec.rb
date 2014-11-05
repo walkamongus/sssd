@@ -19,23 +19,6 @@ describe 'sssd' do
 	describe 'sssd::install class' do
           it { should contain_package('sssd').with_ensure('present') }
           it { should contain_package('libsss_idmap').with_ensure('present') }
-	  if osfamily == 'RedHat'
-	    context 'on Red Hat 6.5' do
-              let(:facts) {{
-                :osfamily               => osfamily,
-	        :operatingsystemrelease => '6.5',
-              }}
-              it { should contain_package('libsss_sudo').with_ensure('present') }
-              it { should contain_package('libsss_autofs').with_ensure('present') }
-	    end
-	    context 'on Red Hat 6.6' do
-              let(:facts) {{
-                :osfamily               => osfamily,
-	        :operatingsystemrelease => '6.6',
-              }}
-              it { should contain_package('sssd-common').with_ensure('present') }
-	    end
-	  end
 	end
 	describe 'sssd::config class' do
 	  it { should contain_file('sssd_config_file').with({
@@ -67,13 +50,18 @@ describe 'sssd' do
 	      'domains' => ['AD','LDAP'],
 	    },
 	  },
-	  :mkhomedir => 'enabled'
+	  :mkhomedir => 'enabled',
+	  :legacy_packages => 'true',
 	}}
         let(:facts) {{
           :osfamily => osfamily,
         }}
 
         it { should compile.with_all_deps }
+	describe 'sssd::install class' do
+          it { should contain_package('libsss_sudo').with_ensure('present') }
+          it { should contain_package('libsss_autofs').with_ensure('present') }
+	end
 	describe 'sssd::config class' do
 	  it { should contain_file('sssd_config_file').with_content(/domains = AD,LDAP/) }
 	  it { should contain_file('sssd_config_file').with_content(/cache_credentials = false/) }
