@@ -77,7 +77,9 @@ Install SSSD with custom configuration:
 ###Parameters
 
 * `mkhomedir`: Defaults to 'disabled'.  Set to 'enabled' to enable auto-creation of home directories on user login
-* `use_legacy_packages`: Boolean. Defaults to false.  Set to true to install the legacy 'libsss_sudo' and 'libsss_autofs' packages. These packages were absorbed into the 'sssd-common' package.
+* `use_legacy_packages`: Boolean. Defaults to false.  Set to true to install the legacy 'libsss_sudo
+                         and 'libsss_autofs' packages. These packages were absorbed into the
+                         'sssd-common' package.
 * `config`: A hash of configuration options stuctured like the sssd.conf file. Array values will be joined into comma-separated lists. 
 
 For example:

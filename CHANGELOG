@@ -10,7 +10,7 @@
 2014-10-22 Release 0.2.1
 - BUGFIX (#1) add correct variable validations
 2014-11-05 Release 1.0.0
-- Default to using 'sssd' metapackage
-- Move libsss_sudo and libsss_autofs packages
+- default to using 'sssd' metapackage
+- move libsss_sudo and libsss_autofs packages
   installation to a 'use_legacy_packages'
   parameter
