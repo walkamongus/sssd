@@ -40,18 +40,12 @@ describe 'sssd' do
       describe "sssd class with some custom parameters on #{osfamily}" do
         let(:params) {{
 	  :config => {
-	    'domain/AD' => {
-	      'ldap_force_upper_case_realm' => false,
-	    },
-	    'domain/LDAP' => {
-	      'cache_credentials' => false,
-	    },
-	    'sssd' => {
-	      'domains' => ['AD','LDAP'],
-	    },
-	  },
+	    'domain/AD'   => { 'ldap_force_upper_case_realm' => false, },
+	    'domain/LDAP' => { 'cache_credentials' => false, },
+	    'sssd'        => { 'domains' => ['AD','LDAP'], },
+          },
 	  :mkhomedir => 'enabled',
-	  :legacy_packages => 'true',
+	  :use_legacy_packages => true,
 	}}
         let(:facts) {{
           :osfamily => osfamily,
