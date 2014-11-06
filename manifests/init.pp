@@ -17,6 +17,9 @@ class sssd (
   $enable_mkhomedir_cmd  = $sssd::params::enable_mkhomedir_cmd,
   $disable_mkhomedir_cmd = $sssd::params::disable_mkhomedir_cmd,
   $pam_mkhomedir_check   = $sssd::params::pam_mkhomedir_check,
+  $idmap_package_name    = $sssd::params::idmap_package_name,
+  $use_legacy_packages   = $sssd::params::use_legacy_packages,
+  $legacy_package_names  = $sssd::params::legacy_package_names,
 
 ) inherits sssd::params {
 
@@ -25,14 +28,16 @@ class sssd (
     $service_name,
     $enable_mkhomedir_cmd,
     $disable_mkhomedir_cmd,
-    $pam_mkhomedir_check
+    $pam_mkhomedir_check,
+    $idmap_package_name
   )
   validate_re(
     $mkhomedir,
     [ '^disabled$', '^enabled$' ],
     'The mkhomedir parameter value should be set to "disabled" or "enabled"'
   )
-  validate_array($sssd_plugin_packages)
+  validate_array($legacy_package_names)
+  validate_bool($use_legacy_packages)
   validate_hash($config)
 
   class { 'sssd::install': } ->

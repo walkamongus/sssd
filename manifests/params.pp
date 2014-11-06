@@ -6,21 +6,6 @@
 class sssd::params {
   case $::osfamily {
     'RedHat': {
-      case $::operatingsystemrelease {
-        '6.6': {
-          $sssd_plugin_packages = [
-            'sssd-common',
-            'libsss_idmap',
-          ]
-        }
-        default: {
-          $sssd_plugin_packages = [
-            'libsss_sudo',
-            'libsss_autofs',
-            'libsss_idmap',
-          ]
-        }
-      }
       $sssd_package_name   = 'sssd'
       $service_name        = 'sssd'
       $config_file         = '/etc/sssd/sssd.conf'
@@ -42,6 +27,12 @@ class sssd::params {
       $enable_mkhomedir_cmd  = '/usr/sbin/authconfig --enablemkhomedir --update'
       $disable_mkhomedir_cmd = '/usr/sbin/authconfig --disablemkhomedir --update'
       $pam_mkhomedir_check   =  '/bin/grep -E \'^USEMKHOMEDIR=yes$\' /etc/sysconfig/authconfig'
+      $idmap_package_name    = 'libsss_idmap'
+      $use_legacy_packages   = false
+      $legacy_package_names  = [
+        'libsss_sudo',
+        'libsss_autofs',
+      ]
     }
     default: {
       fail("${::operatingsystem} not supported")

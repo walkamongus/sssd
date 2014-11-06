@@ -6,8 +6,14 @@ class sssd::install {
     ensure => present,
   }
 
-  package { $sssd::sssd_plugin_packages:
+  package { $sssd::idmap_package_name:
     ensure => present,
+  }
+
+  if $sssd::use_legacy_packages {
+    package { $sssd::legacy_package_names:
+      ensure => present,
+    }
   }
 
 }
