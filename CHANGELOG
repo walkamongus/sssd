@@ -15,4 +15,4 @@
   installation to a 'use_legacy_packages'
   parameter
 2014-11-07 Release 1.0.1
-- add dependency for puppetlabs-stdlib >= 4.1.0
+- add dependency for puppetlabs-stdlib >= 4.2.0
