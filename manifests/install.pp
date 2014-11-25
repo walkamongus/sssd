@@ -6,8 +6,16 @@ class sssd::install {
     ensure => present,
   }
 
-  package { $sssd::idmap_package_name:
-    ensure => present,
+  if $sssd::manage_idmap {
+    package { $sssd::idmap_package_name:
+      ensure => present,
+    }
+  }
+
+  if $sssd::manage_authconfig {
+    package { $sssd::authconfig_package_name:
+      ensure => present,
+    }
   }
 
   if $sssd::use_legacy_packages {

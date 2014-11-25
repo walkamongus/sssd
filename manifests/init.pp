@@ -9,17 +9,20 @@
 #
 class sssd (
 
-  $sssd_package_name     = $sssd::params::sssd_package_name,
-  $sssd_plugin_packages  = $sssd::params::sssd_plugin_packages,
-  $service_name          = $sssd::params::service_name,
-  $config                = $sssd::params::config,
-  $mkhomedir             = $sssd::params::mkhomedir,
-  $enable_mkhomedir_cmd  = $sssd::params::enable_mkhomedir_cmd,
-  $disable_mkhomedir_cmd = $sssd::params::disable_mkhomedir_cmd,
-  $pam_mkhomedir_check   = $sssd::params::pam_mkhomedir_check,
-  $idmap_package_name    = $sssd::params::idmap_package_name,
-  $use_legacy_packages   = $sssd::params::use_legacy_packages,
-  $legacy_package_names  = $sssd::params::legacy_package_names,
+  $sssd_package_name       = $sssd::params::sssd_package_name,
+  $sssd_plugin_packages    = $sssd::params::sssd_plugin_packages,
+  $service_name            = $sssd::params::service_name,
+  $config                  = $sssd::params::config,
+  $mkhomedir               = $sssd::params::mkhomedir,
+  $enable_mkhomedir_cmd    = $sssd::params::enable_mkhomedir_cmd,
+  $disable_mkhomedir_cmd   = $sssd::params::disable_mkhomedir_cmd,
+  $pam_mkhomedir_check     = $sssd::params::pam_mkhomedir_check,
+  $manage_idmap            = $sssd::params::manage_idmap,
+  $idmap_package_name      = $sssd::params::idmap_package_name,
+  $use_legacy_packages     = $sssd::params::use_legacy_packages,
+  $legacy_package_names    = $sssd::params::legacy_package_names,
+  $manage_authconfig       = $sssd::params::manage_authconfig,
+  $authconfig_package_name = $sssd::params::authconfig_package_name,
 
 ) inherits sssd::params {
 
@@ -29,7 +32,8 @@ class sssd (
     $enable_mkhomedir_cmd,
     $disable_mkhomedir_cmd,
     $pam_mkhomedir_check,
-    $idmap_package_name
+    $idmap_package_name,
+    $authconfig_package_name
   )
   validate_re(
     $mkhomedir,
@@ -37,7 +41,11 @@ class sssd (
     'The mkhomedir parameter value should be set to "disabled" or "enabled"'
   )
   validate_array($legacy_package_names)
-  validate_bool($use_legacy_packages)
+  validate_bool(
+    $use_legacy_packages,
+    $manage_idmap,
+    $manage_authconfig
+  )
   validate_hash($config)
 
   class { 'sssd::install': } ->

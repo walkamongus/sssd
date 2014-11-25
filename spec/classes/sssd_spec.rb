@@ -18,6 +18,7 @@ describe 'sssd' do
         end
 	describe 'sssd::install class' do
           it { should contain_package('sssd').with_ensure('present') }
+          it { should contain_package('authconfig').with_ensure('present') }
           it { should contain_package('libsss_idmap').with_ensure('present') }
 	end
 	describe 'sssd::config class' do
@@ -44,8 +45,10 @@ describe 'sssd' do
 	    'domain/LDAP' => { 'cache_credentials' => false, },
 	    'sssd'        => { 'domains' => ['AD','LDAP'], },
           },
-	  :mkhomedir => 'enabled',
+	  :mkhomedir           => 'enabled',
 	  :use_legacy_packages => true,
+	  :manage_idmap        => false,
+	  :manage_authconfig   => false,
 	}}
         let(:facts) {{
           :osfamily => osfamily,
@@ -55,6 +58,8 @@ describe 'sssd' do
 	describe 'sssd::install class' do
           it { should contain_package('libsss_sudo').with_ensure('present') }
           it { should contain_package('libsss_autofs').with_ensure('present') }
+          it { should_not contain_package('authconfig') }
+          it { should_not contain_package('libsss_idmap') }
 	end
 	describe 'sssd::config class' do
 	  it { should contain_file('sssd_config_file').with_content(/domains = AD,LDAP/) }
