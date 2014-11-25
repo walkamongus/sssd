@@ -37,6 +37,7 @@ For SSH and Sudo integration with SSSD, this module works well with [saz/ssh](ht
 * Packages
     * sssd
     * libsss_idmap
+    * authconfig
     * libsss_sudo (legacy)
     * libsss_autofs (legacy)
 * Files
@@ -81,6 +82,8 @@ Install SSSD with custom configuration:
                          and 'libsss_autofs' packages. These packages were absorbed into the
                          'sssd-common' package.
 * `config`: A hash of configuration options stuctured like the sssd.conf file. Array values will be joined into comma-separated lists. 
+* `manage_idmap`: Boolean. Defaults to true. Set to false to disable management of the idmap package
+* `manage_authconfig`: Boolean. Defaults to true. Set to false to disable management of the authconfig package
 
 For example:
 
@@ -88,10 +91,10 @@ For example:
       config => {
         'sssd' => {
           'key1' => 'value1',
-          'key2' => [ 'value2', 'value3' ],
+          'keyX' => [ 'valueY', 'valueZ' ],
         },
         'domain/LDAP' => {
-          'key3' => 'value4',
+          'key2' => 'value2',
         },
       }
 
@@ -100,20 +103,20 @@ or in hiera:
     sssd::config:
       'sssd':
         key1: value1
-        key2:
-          - value2
-          - value3
+        keyX:
+          - valueY
+          - valueZ
       'domain/LDAP':
-        key3: value4
+        key2: value2
 
 Will be represented in sssd.conf like this:
 
     [sssd]
     key1 = value1
-    key2 = value2, value3
+    keyX = valueY, valueZ
 
     [domain/LDAP]
-    key3 = value4
+    key2 = value2
 
 ###Classes
 
