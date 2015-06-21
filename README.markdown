@@ -62,13 +62,13 @@ Install SSSD with custom configuration:
         'sssd' => {
           'key'     => 'value',
           'domains' => ['MY_DOMAIN', 'LDAP',],
-        }
+        },
         'domain/MY_DOMAIN' => {
           'key' => 'value',
-        }
+        },
         'pam' => {
           'key' => 'value',
-        }
+        },
       }
     }
 
