@@ -1,6 +1,6 @@
 {
   "name": "walkamongus-sssd",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "source": "https://github.com/walkamongus/sssd.git",
   "author": "Chadwick Banning",
   "license": "Apache 2.0",
@@ -16,5 +16,15 @@
    ],
   "dependencies": [
     { "name": "puppetlabs/stdlib", "version_requirement": ">= 3.4.0 < 5.0.0" }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": ">= 3.3.0 < 2015.4.0"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": ">= 3.6.0 < 5.0.0"
+    }
   ]
 }
