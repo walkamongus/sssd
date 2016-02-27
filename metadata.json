@@ -1,6 +1,6 @@
 {
   "name": "walkamongus-sssd",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "source": "https://github.com/walkamongus/sssd.git",
   "author": "Chadwick Banning",
   "license": "Apache 2.0",
