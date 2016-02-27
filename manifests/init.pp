@@ -10,7 +10,6 @@
 class sssd (
 
   $sssd_package_name       = $sssd::params::sssd_package_name,
-  $sssd_plugin_packages    = $sssd::params::sssd_plugin_packages,
   $service_name            = $sssd::params::service_name,
   $config                  = $sssd::params::config,
   $mkhomedir               = $sssd::params::mkhomedir,
