@@ -126,8 +126,3 @@ Will be represented in sssd.conf like this:
 * sssd::config
 * sssd::service
 
-##Limitations
-
-Developed using:
-* Puppet 3.6.2
-* CentOS 6.5
