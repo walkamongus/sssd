@@ -83,6 +83,7 @@ Install SSSD with custom configuration:
                          'sssd-common' package.
 * `config`: A hash of configuration options stuctured like the sssd.conf file. Array values will be joined into comma-separated lists. 
 * `manage_idmap`: Boolean. Defaults to true. Set to false to disable management of the idmap package
+* `include_default_config`: Boolean. Defaults to true. Set to false to disable unmanaged default entries in 'sssd.conf'.
 * `manage_authconfig`: Boolean. Defaults to true. Set to false to disable management of the authconfig package
 
 For example:

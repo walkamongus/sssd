@@ -7,6 +7,9 @@
 # [*sample_parameter*]
 #   Explanation of what this parameter affects and what it defaults to.
 #
+# [*include_default_config*]
+#   Includ default configuration for 'sssd.conf'. Defaults to true.
+#
 class sssd (
 
   $sssd_package_name       = $sssd::params::sssd_package_name,
@@ -22,6 +25,7 @@ class sssd (
   $legacy_package_names    = $sssd::params::legacy_package_names,
   $manage_authconfig       = $sssd::params::manage_authconfig,
   $authconfig_package_name = $sssd::params::authconfig_package_name,
+  $include_default_config  = $sssd::params::include_default_config,
 
 ) inherits sssd::params {
 
