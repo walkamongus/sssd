@@ -4,6 +4,9 @@
 # It sets variables according to platform
 #
 class sssd::params {
+
+  $include_default_config = true
+
   case $::osfamily {
     'RedHat': {
       $sssd_package_name       = 'sssd'

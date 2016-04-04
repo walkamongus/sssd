@@ -2,9 +2,17 @@
 #
 # This class is called from sssd
 #
-class sssd::config {
+class sssd::config (
 
-  $final_config = deep_merge($sssd::params::default_config, $sssd::config)
+  $include_default_config = $::sssd::include_default_config,
+
+) {
+
+  if $include_default_config {
+    $final_config = deep_merge($sssd::params::default_config, $sssd::config)
+  } else {
+    $final_config = $sssd::config
+  }
 
   file {'sssd_config_file':
     path    => $sssd::config_file,
