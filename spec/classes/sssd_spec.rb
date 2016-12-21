@@ -11,9 +11,9 @@ describe 'sssd' do
 
         describe 'sssd class' do
           it { should contain_class('sssd::params') }
-          it { should contain_class('sssd::install').that_comes_before('sssd::config') }
+          it { should contain_class('sssd::install').that_comes_before('Class[sssd::config]') }
           it { should contain_class('sssd::config') }
-          it { should contain_class('sssd::service').that_subscribes_to('sssd::config') }
+          it { should contain_class('sssd::service').that_subscribes_to('Class[sssd::config]') }
         end
 
         describe 'sssd::install class' do
