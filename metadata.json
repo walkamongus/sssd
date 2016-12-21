@@ -3,7 +3,7 @@
   "version": "1.2.3",
   "author": "Chadwick Banning",
   "summary": "Install and configure the System Security Services Daemon",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "source": "https://github.com/walkamongus/sssd.git",
   "project_page": "https://github.com/walkamongus/sssd",
   "issues_url": "https://github.com/walkamongus/sssd/issues",
