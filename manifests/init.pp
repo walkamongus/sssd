@@ -16,9 +16,14 @@ class sssd (
   $service_name            = $sssd::params::service_name,
   $config                  = $sssd::params::config,
   $mkhomedir               = $sssd::params::mkhomedir,
+  $pam_mkhomedir_method    = $sssd::params::pam_mkhomedir_method,
   $enable_mkhomedir_cmd    = $sssd::params::enable_mkhomedir_cmd,
   $disable_mkhomedir_cmd   = $sssd::params::disable_mkhomedir_cmd,
+  $pam_mkhomedir_file_path = $sssd::params::pam_mkhomedir_file_path,
   $pam_mkhomedir_check     = $sssd::params::pam_mkhomedir_check,
+  $pam_use_sssd_cmd        = $sssd::params::pam_use_sssd_cmd,
+  $pam_use_sssd_check      = $sssd::params::pam_use_sssd_check,
+  $sssd_clear_cache        = $sssd::params::sssd_clear_cache,
   $manage_idmap            = $sssd::params::manage_idmap,
   $idmap_package_name      = $sssd::params::idmap_package_name,
   $use_legacy_packages     = $sssd::params::use_legacy_packages,
@@ -35,8 +40,12 @@ class sssd (
     $enable_mkhomedir_cmd,
     $disable_mkhomedir_cmd,
     $pam_mkhomedir_check,
+    $pam_mkhomedir_method,
     $idmap_package_name,
-    $authconfig_package_name
+    $authconfig_package_name,
+    $pam_mkhomedir_file_path,
+    $pam_use_sssd_cmd,
+    $pam_use_sssd_check,
   )
   validate_re(
     $mkhomedir,
@@ -47,7 +56,8 @@ class sssd (
   validate_bool(
     $use_legacy_packages,
     $manage_idmap,
-    $manage_authconfig
+    $manage_authconfig,
+    $sssd_clear_cache
   )
   validate_hash($config)
 
