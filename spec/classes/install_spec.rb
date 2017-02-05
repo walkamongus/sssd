@@ -57,5 +57,3 @@ describe 'sssd' do
     end
   end
 end
-
-
