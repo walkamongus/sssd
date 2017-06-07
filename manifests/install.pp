@@ -2,8 +2,8 @@
 #
 class sssd::install {
 
-  package { $sssd::sssd_package_name:
-    ensure => $sssd::sssd_package_ensure,
+  package { $sssd::package_name:
+    ensure => $sssd::package_ensure,
   }
 
   if $sssd::manage_idmap {

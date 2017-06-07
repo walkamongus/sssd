@@ -12,30 +12,34 @@
 #
 class sssd (
 
-  $sssd_package_name       = $sssd::params::sssd_package_name,
-  $service_name            = $sssd::params::service_name,
-  $config                  = $sssd::params::config,
-  $mkhomedir               = $sssd::params::mkhomedir,
-  $pam_mkhomedir_method    = $sssd::params::pam_mkhomedir_method,
-  $enable_mkhomedir_cmd    = $sssd::params::enable_mkhomedir_cmd,
-  $disable_mkhomedir_cmd   = $sssd::params::disable_mkhomedir_cmd,
-  $pam_mkhomedir_file_path = $sssd::params::pam_mkhomedir_file_path,
-  $pam_mkhomedir_check     = $sssd::params::pam_mkhomedir_check,
-  $pam_use_sssd_cmd        = $sssd::params::pam_use_sssd_cmd,
-  $pam_use_sssd_check      = $sssd::params::pam_use_sssd_check,
-  $sssd_clear_cache        = $sssd::params::sssd_clear_cache,
-  $manage_idmap            = $sssd::params::manage_idmap,
-  $idmap_package_name      = $sssd::params::idmap_package_name,
-  $use_legacy_packages     = $sssd::params::use_legacy_packages,
-  $legacy_package_names    = $sssd::params::legacy_package_names,
-  $manage_authconfig       = $sssd::params::manage_authconfig,
-  $authconfig_package_name = $sssd::params::authconfig_package_name,
-  $include_default_config  = $sssd::params::include_default_config,
+  $package_name,
+  $package_ensure,
+  $service_name,
+  $config_file,
+  $default_config,
+  $config,
+  $mkhomedir,
+  $pam_mkhomedir_method,
+  $enable_mkhomedir_cmd,
+  $disable_mkhomedir_cmd,
+  $pam_mkhomedir_file_path,
+  $pam_mkhomedir_check,
+  $pam_use_sssd_cmd,
+  $pam_use_sssd_check,
+  $cache_path,
+  $clear_cache,
+  $manage_idmap,
+  $idmap_package_name,
+  $use_legacy_packages,
+  $legacy_package_names,
+  $manage_authconfig,
+  $authconfig_package_name,
+  $include_default_config,
 
-) inherits sssd::params {
+) {
 
   validate_string(
-    $sssd_package_name,
+    $package_name,
     $service_name,
     $enable_mkhomedir_cmd,
     $disable_mkhomedir_cmd,
@@ -57,12 +61,12 @@ class sssd (
     $use_legacy_packages,
     $manage_idmap,
     $manage_authconfig,
-    $sssd_clear_cache
+    $clear_cache
   )
   validate_hash($config)
 
-  class { 'sssd::install': } ->
-  class { 'sssd::config': } ~>
-  class { 'sssd::service': } ->
-  Class['sssd']
+  class { '::sssd::install': }
+  -> class { '::sssd::config': }
+  ~> class { '::sssd::service': }
+  -> Class['::sssd']
 }

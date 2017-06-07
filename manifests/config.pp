@@ -5,18 +5,18 @@
 class sssd::config (
 
   $include_default_config = $::sssd::include_default_config,
-  $cache_flush_test = "test $(find ${sssd::sssd_cache_path} -size +2999M | wc -l) -gt 0",
+  $cache_flush_test = "test $(find ${sssd::cache_path} -size +2999M | wc -l) -gt 0",
 ) {
 
   if $include_default_config {
-    $final_config = deep_merge($sssd::params::default_config, $sssd::config)
+    $final_config = deep_merge($sssd::default_config, $sssd::config)
   } else {
     $final_config = $sssd::config
   }
 
   exec {'clear_cache':
     refreshonly => true,
-    command     => "/bin/rm -f ${sssd::sssd_cache_path}",
+    command     => "/bin/rm -f ${sssd::cache_path}",
     notify      => Service['sssd'],
   }
 
@@ -27,7 +27,7 @@ class sssd::config (
     notify  => Exec['clear_cache'],
   }
 
-  if $sssd::sssd_clear_cache {
+  if $sssd::clear_cache {
     file {'sssd_config_file':
       path    => $sssd::config_file,
       content => template('sssd/sssd.conf.erb'),

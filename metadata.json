@@ -1,6 +1,6 @@
 {
   "name": "walkamongus-sssd",
-  "version": "1.2.3",
+  "version": "2.0.0",
   "author": "Chadwick Banning",
   "summary": "Install and configure the System Security Services Daemon",
   "license": "Apache-2.0",
@@ -13,7 +13,7 @@
       "version_requirement": ">= 4.2.0 < 5.0.0"
     }
   ],
-  "data_provider": null,
+  "data_provider": "hiera",
   "description": "Install and configure the System Security Services Daemon",
   "tags": [
     "sssd"
@@ -22,7 +22,9 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "6"
+        "5",
+        "6",
+        "7"
       ]
     },
     {
@@ -40,12 +42,8 @@
   ],
   "requirements": [
     {
-      "name": "pe",
-      "version_requirement": ">= 3.3.0 < 2015.4.0"
-    },
-    {
       "name": "puppet",
-      "version_requirement": ">= 3.6.0 < 5.0.0"
+      "version_requirement": ">= 4.0.0 < 5.0.0"
     }
   ]
 }
