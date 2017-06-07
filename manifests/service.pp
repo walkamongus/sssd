@@ -11,4 +11,5 @@ class sssd::service {
     hasstatus  => true,
     hasrestart => true,
   }
+
 }

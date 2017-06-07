@@ -21,8 +21,9 @@ describe 'sssd' do
             it { should contain_package('libpam-sss').with_ensure('present') }
             it { should contain_package('libnss-sss').with_ensure('present') }
           when 'RedHat'
-            if facts[:operatingsystemmajrelease] =~ /(6|7)/
+            if facts[:os]['release']['major'] =~ /(6|7)/
               it { should contain_package('authconfig').with_ensure('present') }
+              it { should contain_package('oddjob-mkhomedir').with_ensure('present') }
             else
               it { should contain_package('authconfig').with_ensure('latest') }
             end

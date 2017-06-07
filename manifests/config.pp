@@ -15,6 +15,7 @@ class sssd::config {
   }
 
   file {'sssd_config_file':
+    ensure  => file,
     path    => $sssd::config_file,
     content => template('sssd/sssd.conf.erb'),
     owner   => 'root',
@@ -37,10 +38,10 @@ class sssd::config {
   }
 
   if $sssd::mkhomedir {
-    $pam_mkhomedir_file_ensure = present
+    $pam_mkhomedir_file_ensure = file
     $pam_mkhomedir_exec_name = 'enable'
 
-    exec {'enable mkhomedir':
+    exec {'enable_mkhomedir':
       command => $sssd::enable_mkhomedir_cmd,
       unless  => $sssd::pam_mkhomedir_check,
     }
@@ -48,7 +49,7 @@ class sssd::config {
     $pam_mkhomedir_file_ensure = absent
     $pam_mkhomedir_exec_name = 'disable'
 
-    exec {'disable mkhomedir':
+    exec {'disable_mkhomedir':
       command => $sssd::disable_mkhomedir_cmd,
       onlyif  => $sssd::pam_mkhomedir_check,
     }
@@ -59,7 +60,7 @@ class sssd::config {
       file { $sssd::pam_mkhomedir_file_path:
         ensure => $pam_mkhomedir_file_ensure,
         source => 'puppet:///modules/sssd/mkhomedir',
-        before => Exec["${pam_mkhomedir_exec_name} mkhomedir"],
+        before => Exec["${pam_mkhomedir_exec_name}_mkhomedir"],
       }
     }
     'authconfig': {
