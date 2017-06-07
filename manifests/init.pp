@@ -24,12 +24,7 @@ class sssd (
   Variant[String, Undef] $pam_use_sssd_check,
   Stdlib::Absolutepath $cache_path,
   Boolean $clear_cache,
-  Boolean $manage_idmap,
-  String $idmap_package_name,
-  Boolean $use_legacy_packages,
-  Array $legacy_package_names,
-  Boolean $manage_authconfig,
-  String $authconfig_package_name,
+  Hash $required_packages,
 
 ) {
 

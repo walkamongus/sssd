@@ -16,9 +16,3 @@ sssd::config:
       cache_credentials: true
 sssd::mkhomedir: true
 sssd::clear_cache: false
-sssd::manage_idmap: true
-sssd::manage_authconfig: true
-sssd::use_legacy_packages: false
-sssd::legacy_package_names:
-  - 'libsss_sudo'
-  - 'libsss_autofs'

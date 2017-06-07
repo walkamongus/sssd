@@ -6,5 +6,10 @@ sssd::pam_mkhomedir_file_path: '/usr/share/pam-configs/mkhomedir'
 sssd::pam_mkhomedir_check: '/bin/grep -E ''pam_mkhomedir.so'' /etc/pam.d/common-session'
 sssd::pam_use_sssd_cmd: ~
 sssd::pam_use_sssd_check: ~
-sssd::idmap_package_name: 'libsss-idmap0'
-sssd::authconfig_package_name: 'libpam-runtime'
+sssd::required_packages:
+  libpam-runtime:
+    ensure: present
+  libpam-sss:
+    ensure: present
+  libnss-sss:
+    ensure: present

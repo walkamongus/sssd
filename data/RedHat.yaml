@@ -8,5 +8,6 @@ sssd::pam_use_sssd_cmd: '/usr/sbin/authconfig --enablesssd --enablesssdauth --up
 sssd::pam_use_sssd_check: >
   /bin/grep -E \'USESSSDAUTH=yes\' /etc/sysconfig/authconfig && 
   /bin/grep -E \'USESSSD=yes\' /etc/sysconfig/authconfig'
-sssd::idmap_package_name: 'libsss_idmap'
-sssd::authconfig_package_name: 'authconfig'
+sssd::required_packages:
+  authconfig:
+    ensure: present

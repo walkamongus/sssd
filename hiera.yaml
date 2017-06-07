@@ -2,6 +2,10 @@
 version: 4
 datadir: data
 hierarchy:
+  - name: "Operating System Major Version"
+    backend: yaml
+    path: "%{facts.os.name}-%{facts.os.release.major}"
+
   - name: "Operating System Family"
     backend: yaml
     path: "%{facts.os.family}"
