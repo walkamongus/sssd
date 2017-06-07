@@ -8,7 +8,10 @@
   "project_page": "https://github.com/walkamongus/sssd",
   "issues_url": "https://github.com/walkamongus/sssd/issues",
   "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 3.4.0 < 5.0.0"}
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.2.0 < 5.0.0"
+    }
   ],
   "data_provider": null,
   "description": "Install and configure the System Security Services Daemon",
