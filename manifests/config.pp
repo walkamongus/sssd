@@ -39,35 +39,34 @@ class sssd::config {
 
   if $sssd::mkhomedir {
     $pam_mkhomedir_file_ensure = file
-    $pam_mkhomedir_exec_name = 'enable'
+    $authconfig_args = ['--enablemkhomedir', '--enablesssd', '--enablesssdauth']
 
-    exec {'enable_mkhomedir':
-      command => $sssd::enable_mkhomedir_cmd,
-      unless  => $sssd::pam_mkhomedir_check,
-    }
   } else {
     $pam_mkhomedir_file_ensure = absent
-    $pam_mkhomedir_exec_name = 'disable'
-
-    exec {'disable_mkhomedir':
-      command => $sssd::disable_mkhomedir_cmd,
-      onlyif  => $sssd::pam_mkhomedir_check,
-    }
+    $authconfig_args = ['--disablemkhomedir', '--disablesssd', '--disablesssdauth']
   }
 
   case $sssd::pam_mkhomedir_method {
-    'file': {
+    'pam-auth-update': {
       file { $sssd::pam_mkhomedir_file_path:
         ensure => $pam_mkhomedir_file_ensure,
         source => 'puppet:///modules/sssd/mkhomedir',
-        before => Exec["${pam_mkhomedir_exec_name}_mkhomedir"],
+        notify => Exec['update_mkhomedir'],
+      }
+
+      exec {'update_mkhomedir':
+        command     => '/usr/sbin/pam-auth-update',
+        refreshonly => true,
       }
     }
     'authconfig': {
-        exec { 'authconfig use sssd for authconfig':
-          command => $sssd::pam_use_sssd_cmd,
-          unless  => $sssd::pam_use_sssd_check,
-        }
+      $args = join($authconfig_args, ' ')
+
+      exec { 'authconfig_update':
+        command => "authconfig ${args} --update",
+        path    => ['/sbin', '/bin', '/usr/sbin', '/usr/bin'],
+        unless  => "/usr/bin/test \"$(authconfig ${args} --test)\" = \"$(authconfig --test)\"",
+      }
     }
     default: {}
   }

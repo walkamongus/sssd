@@ -1,13 +1,6 @@
 ---
 sssd::pam_mkhomedir_method: 'authconfig'
-sssd::enable_mkhomedir_cmd: '/usr/sbin/authconfig --enablemkhomedir --update'
-sssd::disable_mkhomedir_cmd: '/usr/sbin/authconfig --disablemkhomedir --update'
 sssd::pam_mkhomedir_file_path: ~
-sssd::pam_mkhomedir_check: '/bin/grep -E ''^USEMKHOMEDIR=yes$'' /etc/sysconfig/authconfig'
-sssd::pam_use_sssd_cmd: '/usr/sbin/authconfig --enablesssd --enablesssdauth --update'
-sssd::pam_use_sssd_check: >
-  /bin/grep -E \'USESSSDAUTH=yes\' /etc/sysconfig/authconfig && 
-  /bin/grep -E \'USESSSD=yes\' /etc/sysconfig/authconfig'
 sssd::required_packages:
   authconfig:
     ensure: present

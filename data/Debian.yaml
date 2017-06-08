@@ -1,11 +1,6 @@
 ---
-sssd::pam_mkhomedir_method: 'file'
-sssd::enable_mkhomedir_cmd: '/usr/sbin/pam-auth-update'
-sssd::disable_mkhomedir_cmd: '/usr/sbin/pam-auth-update'
+sssd::pam_mkhomedir_method: 'pam-auth-update'
 sssd::pam_mkhomedir_file_path: '/usr/share/pam-configs/mkhomedir'
-sssd::pam_mkhomedir_check: '/bin/grep -E ''pam_mkhomedir.so'' /etc/pam.d/common-session'
-sssd::pam_use_sssd_cmd: ~
-sssd::pam_use_sssd_check: ~
 sssd::required_packages:
   libpam-runtime:
     ensure: present
