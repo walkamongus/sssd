@@ -36,16 +36,17 @@ For SSH and Sudo integration with SSSD, this module works well with [saz/ssh](ht
 
 * Packages
     * sssd
-    * libsss_idmap
     * authconfig
-    * libsss_sudo (legacy)
-    * libsss_autofs (legacy)
+    * oddjob-mkhomedir
+    * libpam-runtime
+    * libpam-sss
+    * libnss-sss
 * Files
     * sssd.conf
 * Services
     * sssd daemon
 * Execs
-    * the authconfig command is run to enable or disable the PAM mkhomedir.so functionality
+    * the authconfig or pam-auth-update commands are run to enable/disable SSSD functionality.
 
 ###Beginning with sssd
 
@@ -77,13 +78,18 @@ Install SSSD with custom configuration:
 
 ###Parameters
 
-* `mkhomedir`: Boolean. Defaults to true.  Enables auto-creation of home directories on user login
-* `use_legacy_packages`: Boolean. Defaults to false.  Set to true to install the legacy 'libsss_sudo
-                         and 'libsss_autofs' packages. These packages were absorbed into the
-                         'sssd-common' package.
-* `config`: A hash of configuration options stuctured like the sssd.conf file. Array values will be joined into comma-separated lists. 
-* `manage_idmap`: Boolean. Defaults to true. Set to false to disable management of the idmap package
-* `manage_authconfig`: Boolean. Defaults to true. Set to false to disable management of the authconfig package
+* `package_name`: String. Name of the `SSSD` package to install.
+* `package_ensure`: String. Ensure value to set for the `SSSD` package.
+* `service_name`: String. Name of the `SSSD` service to manage.
+* `service_ensure`:  Variant[Enum['running','stopped'], Boolean]. Ensure value to set for the `SSSD` service.
+* `config_file`: Stdlib::Absolutepath. Path to the `SSSD` config file.
+* `config`: Hash. A hash of configuration options structured like the sssd.conf file. Array values will be joined into comma-separated lists. 
+* `mkhomedir`: Boolean. Enables auto-creation of home directories on user login.
+* `pam_mkhomedir_method: Enum['pam-auth-update', 'authconfig']. Set supported method for controlling `SSSD` configuration.
+* `pam_mkhomedir_file_path`: Variant[Stdlib::Absolutepath, Undef]. Path to the PAM mkhomedir config file. Only used when `pam_mkhomedir_method => pam-auth-update`.
+* `cache_path`: Stdlib::Absolutepath. Path to the `SSSD` cache files.
+* `clear_cache`: Boolean. Enables clearing of the `SSSD` cache on configuration updates.
+* `required_packages`: Hash. A Hash of package resources to additionally install with the core `SSSD` packages
 
 For example:
 
@@ -120,7 +126,6 @@ Will be represented in sssd.conf like this:
 
 ###Classes
 
-* sssd::params
 * sssd::init
 * sssd::install
 * sssd::config
