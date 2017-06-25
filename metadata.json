@@ -1,6 +1,6 @@
 {
   "name": "walkamongus-sssd",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Chadwick Banning",
   "summary": "Install and configure the System Security Services Daemon",
   "license": "Apache-2.0",
@@ -30,15 +30,18 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "7","8"
+        "7",
+        "8"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "12","14","16"
+        "12",
+        "14",
+        "16"
       ]
-    }    
+    }
   ],
   "requirements": [
     {
