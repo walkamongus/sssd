@@ -1,0 +1,6 @@
+---
+sssd::required_packages:
+  authconfig:
+    ensure: present
+  oddjob-mkhomedir:
+    ensure: present

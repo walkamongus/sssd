@@ -8,11 +8,11 @@ describe 'sssd' do
           facts
         end
 
-        context "sssd class without any parameters on #{os}" do
+        context "sssd::service class with default parameters on #{os}" do
           let(:params) {{ }}
 
 	        describe 'sssd::service class' do
-            it { should contain_service('sssd') }
+            it { should contain_service('sssd').with_ensure('running') }
 	        end
         end
       end

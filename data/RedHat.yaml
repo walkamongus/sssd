@@ -1,0 +1,6 @@
+---
+sssd::pam_mkhomedir_method: 'authconfig'
+sssd::pam_mkhomedir_file_path: ~
+sssd::required_packages:
+  authconfig:
+    ensure: present

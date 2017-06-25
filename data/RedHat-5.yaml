@@ -1,0 +1,4 @@
+---
+sssd::required_packages:
+  authconfig:
+    ensure: latest

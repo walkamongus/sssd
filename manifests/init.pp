@@ -7,62 +7,25 @@
 # [*sample_parameter*]
 #   Explanation of what this parameter affects and what it defaults to.
 #
-# [*include_default_config*]
-#   Includ default configuration for 'sssd.conf'. Defaults to true.
-#
 class sssd (
 
-  $sssd_package_name       = $sssd::params::sssd_package_name,
-  $service_name            = $sssd::params::service_name,
-  $config                  = $sssd::params::config,
-  $mkhomedir               = $sssd::params::mkhomedir,
-  $pam_mkhomedir_method    = $sssd::params::pam_mkhomedir_method,
-  $enable_mkhomedir_cmd    = $sssd::params::enable_mkhomedir_cmd,
-  $disable_mkhomedir_cmd   = $sssd::params::disable_mkhomedir_cmd,
-  $pam_mkhomedir_file_path = $sssd::params::pam_mkhomedir_file_path,
-  $pam_mkhomedir_check     = $sssd::params::pam_mkhomedir_check,
-  $pam_use_sssd_cmd        = $sssd::params::pam_use_sssd_cmd,
-  $pam_use_sssd_check      = $sssd::params::pam_use_sssd_check,
-  $sssd_clear_cache        = $sssd::params::sssd_clear_cache,
-  $manage_idmap            = $sssd::params::manage_idmap,
-  $idmap_package_name      = $sssd::params::idmap_package_name,
-  $use_legacy_packages     = $sssd::params::use_legacy_packages,
-  $legacy_package_names    = $sssd::params::legacy_package_names,
-  $manage_authconfig       = $sssd::params::manage_authconfig,
-  $authconfig_package_name = $sssd::params::authconfig_package_name,
-  $include_default_config  = $sssd::params::include_default_config,
+  String $package_name,
+  String $package_ensure,
+  String $service_name,
+  Variant[Enum['running','stopped'], Boolean] $service_ensure,
+  Stdlib::Absolutepath $config_file,
+  Hash $config,
+  Boolean $mkhomedir,
+  Enum['pam-auth-update', 'authconfig'] $pam_mkhomedir_method,
+  Variant[Stdlib::Absolutepath, Undef] $pam_mkhomedir_file_path,
+  Stdlib::Absolutepath $cache_path,
+  Boolean $clear_cache,
+  Hash $required_packages,
 
-) inherits sssd::params {
+) {
 
-  validate_string(
-    $sssd_package_name,
-    $service_name,
-    $enable_mkhomedir_cmd,
-    $disable_mkhomedir_cmd,
-    $pam_mkhomedir_check,
-    $pam_mkhomedir_method,
-    $idmap_package_name,
-    $authconfig_package_name,
-    $pam_mkhomedir_file_path,
-    $pam_use_sssd_cmd,
-    $pam_use_sssd_check,
-  )
-  validate_re(
-    $mkhomedir,
-    [ '^disabled$', '^enabled$' ],
-    'The mkhomedir parameter value should be set to "disabled" or "enabled"'
-  )
-  validate_array($legacy_package_names)
-  validate_bool(
-    $use_legacy_packages,
-    $manage_idmap,
-    $manage_authconfig,
-    $sssd_clear_cache
-  )
-  validate_hash($config)
-
-  class { 'sssd::install': } ->
-  class { 'sssd::config': } ~>
-  class { 'sssd::service': } ->
-  Class['sssd']
+  class { '::sssd::install': }
+  -> class { '::sssd::config': }
+  ~> class { '::sssd::service': }
+  -> Class['::sssd']
 }

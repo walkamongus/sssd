@@ -1,0 +1,10 @@
+---
+sssd::pam_mkhomedir_method: 'pam-auth-update'
+sssd::pam_mkhomedir_file_path: '/usr/share/pam-configs/mkhomedir'
+sssd::required_packages:
+  libpam-runtime:
+    ensure: present
+  libpam-sss:
+    ensure: present
+  libnss-sss:
+    ensure: present

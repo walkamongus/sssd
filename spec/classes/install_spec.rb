@@ -8,23 +8,29 @@ describe 'sssd' do
           facts
         end
 
-        context "sssd class without any parameters on #{os}" do
+        context "sssd::install class with default parameters on #{os}" do
           let(:params) {{ }}
 
-          describe 'sssd::install class', :if => os['family'] == 'redhat' do
+          describe 'sssd::install class' do
             it { should contain_package('sssd').with_ensure('present') }
-            it { should contain_package('authconfig').with_ensure('present') }
-            it { should contain_package('libsss_idmap').with_ensure('present') }
 	        end
 
-          describe 'sssd::install class', :if => os['family'] == 'debian' do
-            it { should contain_package('sssd').with_ensure('present') }
+          case facts[:osfamily]
+          when 'Debian'
             it { should contain_package('libpam-runtime').with_ensure('present') }
-            it { should contain_package('libsss-idmap0').with_ensure('present') }
+            it { should contain_package('libpam-sss').with_ensure('present') }
+            it { should contain_package('libnss-sss').with_ensure('present') }
+          when 'RedHat'
+            if facts[:os]['release']['major'] =~ /(6|7)/
+              it { should contain_package('authconfig').with_ensure('present') }
+              it { should contain_package('oddjob-mkhomedir').with_ensure('present') }
+            else
+              it { should contain_package('authconfig').with_ensure('latest') }
+            end
           end
         end
 
-        context "sssd class with some custom parameters on #{os}", :if => os['family'] == 'redhat' do
+        context "sssd::install class with custom parameters on #{os}" do
           let(:params) do
             {
 	            :config => {
@@ -32,26 +38,10 @@ describe 'sssd' do
 	              'domain/LDAP' => { 'cache_credentials' => false, },
 	              'sssd'        => { 'domains' => ['AD','LDAP'], },
               },
-	            :mkhomedir           => 'enabled',
-	            :use_legacy_packages => true,
-	            :manage_idmap        => false,
-	            :manage_authconfig   => false,
+	            :mkhomedir           => true,
 	          }
           end
           
-	        describe 'sssd::install class', :if => os['family'] == 'redhat' do
-            it { should contain_package('libsss_sudo').with_ensure('present') }
-            it { should contain_package('libsss_autofs').with_ensure('present') }
-            it { should_not contain_package('authconfig') }
-            it { should_not contain_package('libsss_idmap') }
-	        end
-
-          describe 'sssd::install class', :if => os['family'] == 'debian' do
-            it { should contain_package('libsss_sudo').with_ensure('present') }
-            it { should contain_package('libsss_autofs').with_ensure('present') }
-            it { should_not contain_package('libpam-runtime') }
-            it { should_not contain_package('libsss-idmap0') }
-          end
         end
       end
     end
